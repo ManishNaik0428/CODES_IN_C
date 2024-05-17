@@ -1,0 +1,155 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *link;
+};
+
+void count_no(struct node*);
+void add_at_end(struct node **, int);
+void add_in_beg(struct node **, int);
+void add_at_pos(struct node **, int, int);
+struct node* del_first(struct node *);
+void del_last(struct node **);
+void display_list(struct node *);
+
+int main() {
+    struct node *head = NULL;
+
+    add_at_end(&head, 45);
+    add_at_end(&head, 53);
+    add_at_end(&head, 32);
+    add_at_end(&head, 63);
+
+    printf("\nInitial list\n");
+    display_list(head);
+
+    printf("\nCount\n");
+    count_no(head);
+    
+    printf("\nAdded at End\n");
+    add_at_end(&head, 50);
+    display_list(head);
+
+    printf("\nAdded in Beginning\n");
+    add_in_beg(&head, 76);
+    display_list(head);
+
+    printf("\nAdded in certain position\n");
+    add_at_pos(&head, 98, 3);
+    display_list(head);
+
+    printf("\nDelete at First\n");
+    head = del_first(head);
+    display_list(head);
+
+    printf("\nDelete Last Element\n");
+    del_last(&head);
+    display_list(head);
+
+    return 0;
+}
+
+void count_no(struct node *head) {
+    int count = 0;
+    while (head != NULL) {
+        count++;
+        head = head->link;
+    }
+    printf("Number of nodes: %d\n", count);
+}
+
+void add_at_end(struct node **head, int data) {
+    struct node *new_node = malloc(sizeof(struct node));
+    if (new_node == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    new_node->data = data;
+    new_node->link = NULL;
+
+    if (*head == NULL) {
+        *head = new_node;
+    } else {
+        struct node *temp = *head;
+        while (temp->link != NULL) {
+            temp = temp->link;
+        }
+        temp->link = new_node;
+    }
+}
+
+void add_in_beg(struct node **head, int data) {
+    struct node *new_node = malloc(sizeof(struct node));
+    if (new_node == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    new_node->data = data;
+    new_node->link = *head;
+    *head = new_node;
+}
+
+void add_at_pos(struct node **head, int data, int position) {
+    if (position == 1) {
+        add_in_beg(head, data);
+        return;
+    }
+    
+    struct node *new_node = malloc(sizeof(struct node));
+    if (new_node == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    new_node->data = data;
+
+    struct node *temp = *head;
+    while (position-- > 2 && temp != NULL) {
+        temp = temp->link;
+    }
+    if (temp == NULL) {
+        printf("Position out of range\n");
+        free(new_node);
+        return;
+    }
+
+    new_node->link = temp->link;
+    temp->link = new_node;
+}
+
+struct node* del_first(struct node *head) {
+    if (head == NULL) {
+        printf("List is Empty\n");
+        return NULL;
+    }
+    struct node *temp = head;
+    head = head->link;
+    free(temp);
+    return head;
+}
+
+void del_last(struct node **head) {
+    if (*head == NULL) {
+        printf("List is Empty\n");
+        return;
+    } else if ((*head)->link == NULL) {
+        free(*head);
+        *head = NULL;
+    } else {
+        struct node *temp = *head;
+        while (temp->link->link != NULL) {
+            temp = temp->link;
+        }
+        free(temp->link);
+        temp->link = NULL;
+    }
+}
+
+void display_list(struct node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->link;
+    }
+    printf("NULL\n");
+}

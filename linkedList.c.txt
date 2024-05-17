@@ -1,0 +1,273 @@
+// Online C compiler to run C program online
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+     int data;
+     struct node *link;
+};
+void count_no(struct node*);
+void add_at_end(struct node *, int );
+void add_in_beg(struct node **,int );
+void add_at_pos(struct node *,int,int);
+struct node * del_first(struct node *);
+void del_last(struct node *);
+void del_pos(struct node **,int);
+struct node * Reverse(struct node *);
+struct node *del_list(struct node *);
+int main()
+{
+    struct node *head=malloc(sizeof(struct node));
+    head->data=45;
+    head->link=NULL;
+   // printf("%d\t",head->data);
+    
+    
+    struct node *ptr=malloc(sizeof(struct node));
+    ptr->data=53;
+    ptr->link=NULL;
+    head->link=ptr;
+    //printf("%d\t",ptr->data);
+    
+    ptr=malloc(sizeof(struct node));
+    ptr->data=32;
+    ptr->link=NULL;
+    head->link->link=ptr;
+    //printf("%d\t",ptr->data);
+    
+    
+    printf("\ncount\n");
+    count_no(head);
+    
+    
+    printf("\nAdded at End\n");
+    add_at_end(head,50);
+    struct node *ptr1=head;
+    while(ptr1!=NULL)
+    {
+        printf("%d\t",ptr1->data);
+        ptr1=ptr1->link;
+    }
+    
+    
+    printf("\n Added in Beginning \n");
+    //head->link=ptr;
+    int data1=76;
+    add_in_beg(&head,data1);
+    //struct node *ptr=NULL;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+    
+    
+    printf("\nAdded in certain position\n");
+    int d2=98 ,pos=3;
+    add_at_pos(head,d2,pos);
+    struct node *ptr2=head;
+    while(ptr2!=NULL)
+    {
+        printf("%d\t",ptr2->data);
+        ptr2=ptr2->link;
+    }
+    
+    printf("\nDelete at First\n");
+    head=del_first(head);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+    
+    printf("\nDelete Last Element\n");
+    del_last(head);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+    
+    printf("\n Delete at Certain position\n");
+    int post=2;
+    del_pos(&head,post);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+    
+    printf("\n Reverse Linked List\n");
+    head=Reverse(head);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+    
+    printf("\nLIST Deleted\n");
+    if(head==NULL)
+    {
+        printf("List is Already Empty");
+    }
+    head=del_list(head);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d\t",ptr->data);
+        ptr=ptr->link;
+    }
+ return 0;   
+}
+
+void count_no(struct node *head)
+{
+    int count=0;
+    if(head==NULL)
+    {
+        printf("List is Empty");
+    }
+    struct node *ptr=NULL;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        count++;
+        ptr=ptr->link;
+    }
+    printf("%d",count);
+}
+
+void add_at_end(struct node *head, int data)
+{
+    struct node *ptr, *temp;
+    ptr=head;
+    temp=malloc(sizeof(struct node));
+    temp->data=data;
+    temp->link=NULL;
+    
+    while(ptr->link!=NULL)
+    {
+        ptr=ptr->link;
+    }
+    ptr->link=temp;
+}
+
+void add_in_beg(struct node **head,int d)
+{
+    struct node *ptr=malloc(sizeof(struct node));
+    ptr->data=d;
+    ptr->link=NULL;
+    ptr->link=*head;
+    *head=ptr;
+}
+
+void add_at_pos(struct node *head,int data,int position)
+{
+    struct node *ptr=head;
+    struct node *ptr1=malloc(sizeof(struct node));
+    ptr1->data=data;
+    ptr1->link=NULL;
+    position--;
+    while(position!=1)
+    {
+        ptr=ptr->link;
+        position--;
+    }
+    ptr1->link=ptr->link;
+    ptr->link=ptr1;
+}
+
+struct node * del_first(struct node *head)
+{
+    if(head==NULL)
+        printf("List is Empty");
+    else
+    {
+        struct node *temp=head;
+        head=head->link;
+        free(temp);
+        temp=NULL;
+    }
+    return head;
+}
+
+void del_last(struct node *head)
+{
+    if(head==NULL)
+    {
+        printf("List is Empty");
+    }
+    else if(head->link==NULL)
+    {
+        free(head);
+        head=NULL;
+    }
+    else
+    {
+        struct node *temp=head;
+        while(temp->link->link!=NULL)
+        {
+            temp=temp->link;
+        }
+        free(temp->link);
+        temp->link=NULL;
+    }
+}
+
+void del_pos(struct node **head,int position)
+{
+    struct node *current=*head;
+    struct node *previous=*head;
+    if(*head==NULL)
+        printf("list is Empty");
+    else if(position==1)
+    {
+        *head=current->link;
+        free(current);
+        current=NULL;
+    }
+    else
+    {
+        while(position!=1)
+        {
+            previous=current;
+            current=current->link;
+            position--;
+        }
+        previous->link=current->link;
+        free(current);
+        current=NULL;
+    }
+}
+
+struct node * Reverse(struct node *head)
+{
+    struct node *prev=NULL;
+    struct node *next=NULL;
+    while(head!=NULL)
+    {
+        next=head->link;
+        head->link=prev;
+        prev=head;
+        head=next;
+    }
+    head=prev;
+    return head;
+}
+
+struct node *del_list(struct node *head)
+{
+    struct node *temp=head;
+    while(temp!=NULL)
+    {
+        temp=temp->link;
+        free(head);
+        head=NULL;
+    }
+    return head;
+}

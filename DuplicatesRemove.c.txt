@@ -1,0 +1,126 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *link;
+};
+void del_position(struct node **,int);
+void add_beg(struct node **,int);
+void remove_duplicate(struct node **);
+int main()
+{
+    struct node *head=NULL;
+    struct node *ptr;
+    /*add_beg(&head,92);
+    add_beg(&head,97);
+    add_beg(&head,93);
+    add_beg(&head,91);
+    del_position(&head,3);*/
+      int n, value, position;
+
+    // User input for adding elements
+    printf("How many elements do you want to add at the beginning? ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &value);
+        add_beg(&head, value);
+    }
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d ->",ptr->data);
+        ptr=ptr->link;
+    }
+    printf("NULL\n");
+    
+    /* printf("Enter the position of the element to delete: ");
+    scanf("%d", &position);
+    del_position(&head, position);
+
+    // Printing the list after deleting the element
+    printf("List after deletion:\n ");
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d -> ", ptr->data);
+        ptr = ptr->link;
+    }
+    printf("NULL\n");*/
+    
+    remove_duplicate(&head);
+    printf("Removing Duplicate Elements:\n");
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d ->",ptr->data);
+        ptr=ptr->link;
+    }
+    printf("NULL");
+    return 0;
+}
+
+void add_beg(struct node **head,int data)
+{
+    struct node *ptr=malloc(sizeof(struct node));
+    ptr->data=data;
+    ptr->link=NULL;
+    ptr->link=*head;
+    *head=ptr;
+}
+
+
+void del_position(struct node **head,int position)
+{
+    struct node *current=*head;
+    struct node *previous=*head;
+    if(*head==NULL)
+    {
+        printf("List is Empty");
+    }
+    else if(position==1)
+    {
+        *head=current->link;
+        free(current);
+        current=NULL;
+    }
+    else
+    {
+        while(position!=1)
+        {
+            previous=current;
+            current=current->link;
+            position--;
+        }
+        previous->link=current->link;
+        free(current);
+        current=NULL;
+    }
+}
+
+void remove_duplicate(struct node **head)
+{
+    struct node *current=*head;
+    struct node *compare,*prev;
+    while(current!=NULL && current->link!=NULL)
+    {
+        prev=current;
+        compare=current->link;
+        
+        while(compare!=NULL)
+        {
+            if(current->data==compare->data)
+            {
+                prev->link=compare->link;
+                free(compare);
+                compare=prev->link;
+            }
+            else
+            {
+                prev=compare;
+                compare=compare->link;
+            }
+        }
+        current=current->link;
+}
+}
