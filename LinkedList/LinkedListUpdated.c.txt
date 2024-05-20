@@ -1,0 +1,197 @@
+// Online C compiler to run C program online
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+struct node {
+    int data;
+    struct node *link;
+};
+
+void del_position(struct node **,int);
+void add_beg(struct node **, int);
+void remove_duplicate(struct node **);
+void reverse(struct node **);
+void add_last(struct node **,int);
+void add_at_position(struct node **,int,int);
+int main()
+{
+    struct node *head=NULL;
+    struct node *ptr;
+    int n , value , position;
+    printf("Enter the Elements you want to enter=\t");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter the elements %d=",i+1);
+        scanf("%d",&value);
+        add_beg(&head,value);
+    }
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d-> ",ptr->data);
+        ptr=ptr->link;
+    }
+    printf("NULL\n");
+     printf("Enter the Elements you want to enter at last=\t");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter the elements %d=",i+1);
+        scanf("%d",&value);
+        add_last(&head,value);
+    }
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d-> ",ptr->data);
+        ptr=ptr->link;
+    }
+    printf("NULL\n");
+    
+  printf("Enter the positon you want to delete: ");
+  scanf("%d",&position);
+  del_position(&head,position);
+  ptr=head;
+  while(ptr!=NULL)
+  {
+      printf("%d->",ptr->data);
+      ptr=ptr->link;
+  }
+  printf("NULL\n");
+  printf("Reverse list \n");
+  reverse(&head);
+  ptr=head;
+  while(ptr!=NULL)
+  {
+      printf("%d->",ptr->data);
+      ptr=ptr->link;
+  }
+  printf("NULL\n");
+  printf("List After removing duplicates ->\n");
+  remove_duplicate(&head);
+  ptr=head;
+  while(ptr!=NULL)
+  {
+      printf("%d->",ptr->data);
+      ptr=ptr->link;
+  }
+  printf("NULL\n");
+    printf("Enter elements to add at certaion position at list=\t");
+    scanf("%d %d",&n,&position);
+    add_at_position(&head,n,position);
+    
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d-> ",ptr->data);
+        ptr=ptr->link;
+    }
+  
+    return 0;
+}
+
+void add_beg(struct node **head,int data)
+{
+    struct node *ptr=malloc(sizeof(struct node));
+    ptr->data=data;
+    ptr->link=NULL;
+    ptr->link=*head;
+    *head=ptr;
+}
+void add_last(struct node **head,int data)
+{
+    struct node *ptr,*temp;
+    ptr=*head;
+    temp=malloc(sizeof(struct node));
+    temp->data=data;
+    temp->link=NULL;
+    while(ptr->link!=NULL)
+    {
+        ptr=ptr->link;
+    }
+    ptr->link=temp;
+}
+void del_position(struct node **head, int position)
+{
+    struct node *current=*head;
+    struct node *previous=*head;
+    if(*head==NULL)
+    {
+        printf("List is Empty\n");
+    }
+    else if(position==1)
+    {
+        *head=current->link;
+        free(current);
+        current=NULL;
+    }
+    else 
+    {
+        while(position!=1)
+        {
+            previous=current;
+            current=current->link;
+            position--;
+        }
+        previous->link=current->link;
+        free(current);
+        current=NULL;
+    }
+}
+
+void remove_duplicate(struct node **head)
+{
+    struct node *current=*head;
+    struct node *compare,*prev;
+    while(current!=NULL && current->link!=NULL)
+    {
+        prev=current;
+        compare=current->link;
+        while(compare!=NULL)
+        {
+            if(current->data==compare->data)
+            {
+                prev->link=compare->link;
+                free(compare);
+                compare=prev->link;
+            }
+            else
+            {
+                prev=compare;
+                compare=compare->link;
+            }
+        }current=current->link;
+    }
+}
+
+void reverse(struct node **head)
+{
+    struct node *prev=NULL;
+    struct node *next=NULL;
+    struct node *current=*head;
+    while(current!=NULL)
+    {
+        next = current->link;
+        current->link=prev;
+        prev=current;
+        current=next;
+    }
+    *head=prev;
+}
+
+void add_at_position(struct node **head,int data,int position)
+{
+    struct node *ptr=*head;
+    struct node *ptr1=malloc(sizeof(struct node));
+    ptr1->data=data;
+    ptr1->link=NULL;
+    position--;
+    while(position!=1)
+    {
+        ptr=ptr->link;
+        position--;
+    }
+    ptr1->link=ptr->link;
+    ptr->link=ptr1;
+}
