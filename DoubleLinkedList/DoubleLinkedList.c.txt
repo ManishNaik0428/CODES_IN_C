@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    struct node *prev;
+    int data;
+    struct node *next;
+};
+
+struct node *addToEmpty(struct node *, int);
+struct node *add_at_Beginning(struct node *, int);
+struct node *add_at_last(struct node *, int);
+struct node *insert_at_position(struct node *, int, int);
+struct node *addBeforePosition(struct node *, int, int);
+
+int main() {
+    struct node *head = NULL;
+    struct node *ptr;
+    int position = 3; // Define position here for the example
+
+    head = addToEmpty(head, 66);
+    head = add_at_Beginning(head, 95);
+    
+    printf("List after adding to empty and at beginning:\n");
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d-> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
+
+    head = add_at_last(head, 64);
+
+    printf("List after adding at last:\n");
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d-> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
+
+    head = insert_at_position(head, 82, position);
+
+    printf("List after inserting at position %d:\n", position);
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d-> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
+
+    int position1 = 2;
+    head = addBeforePosition(head, 55, position1);
+    printf("List after adding before position %d:\n", position1);
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d-> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
+
+    return 0;
+}
+
+struct node *addToEmpty(struct node *head, int data) {
+    struct node *temp = malloc(sizeof(struct node));
+    temp->prev = NULL;
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+struct node *add_at_Beginning(struct node *head, int data) {
+    struct node *temp = malloc(sizeof(struct node));
+    temp->prev = NULL;
+    temp->data = data;
+    temp->next = head;
+    if (head != NULL) {
+        head->prev = temp;
+    }
+    head = temp;
+    return head;
+}
+
+struct node *add_at_last(struct node *head, int data) {
+    struct node *temp = malloc(sizeof(struct node));
+    struct node *tp = head;
+    temp->prev = NULL;
+    temp->data = data;
+    temp->next = NULL;
+
+    if (head == NULL) {
+        return temp;
+    }
+
+    while (tp->next != NULL) {
+        tp = tp->next;
+    }
+    tp->next = temp;
+    temp->prev = tp;
+    return head;
+}
+
+struct node *insert_at_position(struct node *head, int data, int position) {
+    if (position == 1) {
+        return add_at_Beginning(head, data);
+    }
+
+    struct node *temp = head;
+    struct node *newP = malloc(sizeof(struct node));
+    newP->data = data;
+    newP->prev = NULL;
+    newP->next = NULL;
+
+    while (position > 2 && temp != NULL) {
+        temp = temp->next;
+        position--;
+    }
+
+    if (temp == NULL || temp->next == NULL) {
+        return add_at_last(head, data);
+    }
+
+    newP->next = temp->next;
+    temp->next->prev = newP;
+    temp->next = newP;
+    newP->prev = temp;
+    return head;
+}
+
+struct node *addBeforePosition(struct node *head, int data, int position) {
+    if (position == 1) {
+        return add_at_Beginning(head, data);
+    }
+
+    struct node *temp = head;
+    while (position > 2 && temp->next != NULL) {
+        temp = temp->next;
+        position--;
+    }
+
+    if (temp->next == NULL) {
+        return add_at_last(head, data);
+    }
+
+    struct node *newP = malloc(sizeof(struct node));
+    newP->data = data;
+    newP->prev = temp;
+    newP->next = temp->next;
+
+    if (temp->next != NULL) {
+        temp->next->prev = newP;
+    }
+    temp->next = newP;
+
+    return head;
+}
