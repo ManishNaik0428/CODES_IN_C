@@ -9,6 +9,7 @@ struct node *add_before_position(struct node *,int,int);
 struct node *delete_First(struct node *);
 struct node *delete_last(struct node *);
 struct node *delete_inter_node(struct node *,int);
+struct node * reverse(struct node *);
 struct node{
     struct node *prev;
     int data;
@@ -22,7 +23,11 @@ int main()
     int position=2;
     head=addToEmpty(head,69);
     head=add_at_beg(head,55);
+    head=add_at_last(head,31);
+    head=add_at_last(head,32);
     head=add_at_last(head,33);
+    head=add_at_last(head,34);
+    head=add_at_last(head,35);
     head=insert_at_position(head,48,position);
     printf("List After Entering in empty file and adding in beginning:\n");
     ptr=head;
@@ -63,6 +68,15 @@ int main()
     int posi=2;
     printf("deleting at specific position:\n");
     head=delete_inter_node(head,posi);
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d->",ptr->data);
+        ptr=ptr->next;
+    }
+    printf("NULL\n");
+    printf("Reverse List:\n");
+    head=reverse(head);
     ptr=head;
     while(ptr!=NULL)
     {
@@ -207,5 +221,25 @@ struct node *delete_inter_node(struct node *head,int position)
     temp->next->prev=temp1->next;
     free(temp);
     temp=NULL;
+    return head;
+}
+
+
+struct node *reverse(struct node *head)
+{
+    struct node *ptr1=head;
+    struct node *ptr2=ptr1->next;
+    
+    ptr1->next=NULL;
+    ptr1->prev=ptr2;
+    
+    while(ptr2!=NULL)
+    {
+        ptr2->prev=ptr2->next;
+        ptr2->next=ptr1;
+        ptr1=ptr2;
+        ptr2=ptr2->prev;
+    }
+    head=ptr1;
     return head;
 }
