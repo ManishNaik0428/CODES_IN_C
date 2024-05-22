@@ -1,0 +1,130 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node *add_in_Empty(struct node *,int);
+struct node *addAtbeg(struct node *,int);
+struct node *addAtLast(struct node *,int);
+struct node *insert_after_node(struct node *,int,int);
+struct node *insert_before_node(struct node *,int,int);
+struct node *insert_after_node(struct node *,int,int);
+
+struct node {
+    struct node *prev;
+    int data;
+    struct node *next;
+};
+int main()
+{
+    struct node *head=NULL;
+    struct node *ptr;
+    head=add_in_Empty(head,55);
+    head=addAtbeg(head,48);
+    head=addAtLast(head,53);
+    int pos=2;
+    head=insert_after_node(head,43,pos);
+    printf("Added After the node the list is as follows \n");
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d-> ",ptr->data);
+        ptr=ptr->next;
+    }
+    printf("NULL\n");
+    int pos1=2;
+    head=insert_before_node(head,44,pos1);
+    printf("Added Before the node the list is as follows \n");
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d-> ",ptr->data);
+        ptr=ptr->next;
+    }
+    printf("NULL\n");
+    
+}
+struct node *add_in_Empty(struct node *head,int data)
+{
+    struct node *temp=malloc(sizeof(struct node));
+    temp->prev=NULL;
+    temp->data=data;
+    temp->next=NULL;
+    return temp;
+}
+
+struct node *addAtbeg(struct node *head,int data)
+{
+    struct node *temp=malloc(sizeof(struct node));
+    temp->prev=NULL;
+    temp->data=data;
+    temp->next=head;
+    if(head!=NULL)
+    {
+        head->prev=temp;
+    }
+    head=temp;
+    return head;
+}
+
+struct node *addAtLast(struct node *head,int data)
+{
+    struct node *temp=malloc(sizeof(struct node));
+    struct node *tp=head;
+    temp->prev=NULL;
+    temp->data=data;
+    temp->next=NULL;
+    while(tp->next!=NULL)
+    {
+        tp=tp->next;
+    }
+    tp->next=temp;
+    temp->prev=tp;
+    return head;
+}
+
+struct node *insert_after_node(struct node *head,int data,int position)
+{
+    struct node *temp=head;
+    struct node *temp2=NULL;
+    struct node *newP=NULL;
+    newP=add_in_Empty(newP,data);
+    
+    while(position!=1)
+    {
+        temp=temp->next;
+        position--;
+    }
+    temp2=temp->next;
+    temp->next=newP;
+    temp2->prev=newP;
+    newP->prev=temp;
+    newP->next=temp2;
+    return head;
+}
+
+struct node *insert_before_node(struct node *head,int data,int position)
+{
+    struct node *temp=head;
+    struct node *temp2=NULL;
+    struct node *newP =NULL;
+    newP=add_in_Empty(newP,data);
+    
+    while(position>2)
+    {
+        temp=temp->next;
+        position--;
+    }
+    if(position==1)
+    {
+        newP=addAtbeg(newP,data);
+    }
+    else
+    {
+        temp2=temp->next;
+        temp->next=newP;
+        temp2->prev=newP;
+        newP->next=temp2;
+        newP->prev=temp;
+    }
+    return head;
+}
