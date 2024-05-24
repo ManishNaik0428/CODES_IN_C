@@ -1,0 +1,24 @@
+#include<stdio.h>
+ int main()
+ {
+     int arr[15];
+     int i,n;
+     int age,lowest;
+     printf("Enter number of student you want to enter:");
+     scanf("%d",&n);
+     for(i=0;i<n;i++)
+     {
+         printf("student %d=",i+1);
+         scanf("%d",&arr[i]);
+     }
+     lowest=arr[0];
+     for(i=0;i<n;i++)
+     {
+         if(lowest>arr[i])
+         {
+             lowest=arr[i];
+         }
+     }
+     printf("The Lowest age of student is = %d",lowest);
+     return 0;
+ }
