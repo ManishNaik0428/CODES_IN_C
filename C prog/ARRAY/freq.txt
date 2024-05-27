@@ -1,0 +1,38 @@
+#include<stdio.h>
+int main()
+{
+    int arr[100],freq[100],i,j,n;
+    int count;
+    printf("Enter The Number Of Elements You Want To Enter In 1stArray:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Arr[%d]:",i);
+        scanf("%d",&arr[i]);
+        freq[i]=-1;
+    }
+    for(i=0;i<n;i++)
+    {
+        count=1;
+        for(j=i+1;j<n;j++)
+        {
+            if(arr[i]==arr[j])
+            {
+                count++;
+                freq[j]=0;
+            }
+        }
+        if(freq[i]!=0)
+        {
+            freq[i]=count;
+        }
+    }        
+        for(i=0;i<n;i++)
+        {
+            if(freq[i]!=0)
+            {
+                printf("\nTher freq of arr[%d] is = [%d]",arr[i],freq[i]);
+            }
+        }
+    return 0;
+}

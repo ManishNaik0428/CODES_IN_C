@@ -1,0 +1,29 @@
+#include<stdio.h>
+int main()
+{
+    int arr[100],n,i;
+    printf("Enter The Number Of Elements You Want To Enter In 1stArray:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Arr[%d]:",i);
+        scanf("%d",&arr[i]);
+    }
+    printf("\nEven Number:");
+   for(i=0;i<n;i++)
+   {
+       if(i%2==0)
+       {
+           printf("[%d]\t",arr[i]);
+       }
+   }
+   printf("\nOdd Number:");
+   for(i=0;i<n;i++)
+   {
+       if(i%2!=0)
+       {
+           printf("[%d]\t",arr[i]);
+       }
+   }
+    return 0;
+}
