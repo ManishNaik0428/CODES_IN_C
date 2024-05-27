@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main()
+{
+  int arr[100],arr1[100],n,i;
+  printf("Enter Number :");
+  scanf("%d",&n);
+  for(i=0;i<n;i++)
+  {
+      printf("Arr[%d]:",arr[i]);
+      scanf("%d",&arr[i]);
+  }
+  for(i=0;i<n;i++)
+  {
+      arr1[i]=arr[i];
+  }
+  printf("Original Array\n");
+  for(i=0;i<n;i++)
+  {
+      printf("[%d]\t",arr[i]);
+  }
+  printf("\nCopied Array \n");
+  for(i=0;i<n;i++)
+  {
+      printf("[%d]\t",arr1[i]);
+  }
+     return 0;
+}
