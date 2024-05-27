@@ -1,0 +1,25 @@
+#include<stdio.h>
+void check(int num);
+int main()
+{
+    int arr[10],i,n;
+    printf("enter the elements in array:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Arr[%d]:",i);
+        scanf("%d",&arr[i]);
+    }
+    for(i=0;i<n;i++)
+    {
+        check(arr[i]);
+    }        
+    return 0;
+}
+void check(int num)
+{
+    if(num%2==0)
+        printf("%d is Even \n",num);
+    else
+        printf("%d id ODD \n",num);
+}
