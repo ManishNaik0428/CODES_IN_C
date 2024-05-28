@@ -1,0 +1,32 @@
+#include<stdio.h>
+#define MAX 50
+int main()
+{
+    int arr[MAX],i,j,n,temp,min;
+    printf("Enter the number:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        printf("Arr[%d]:",i);
+        scanf("%d",&arr[i]);
+    }
+    min=0;
+    for(j=1;j<n;j++)
+    {
+        if(arr[min]>arr[j])
+        {
+            min=j;
+        }
+    }
+    if(min!=0)
+    {
+        temp=arr[0];
+        arr[0]=arr[min];
+        arr[min]=temp;
+    }
+    for(i=0;i<n;i++)
+    {
+        printf("%d\t",arr[i]);
+    }
+    return 0;
+}
