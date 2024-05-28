@@ -28,7 +28,7 @@ int main()
     }
     for(i=0;i<n2;i++)
     {
-        for(k=0;k<n2-1;k++)
+        for(k=0;k<n2;k++)
         {
             if(arr2[k]>arr2[k+1])
             {
