@@ -1,0 +1,27 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+
+int main() {
+    int arr[10][10],i,j,n;
+    printf("enter number:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            printf("Arr[%d][%d]:",i,j);
+            scanf("%d",&arr[i][j]);
+        }
+    }
+    printf("\nArray in multidimensional:\n");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            printf("%d\t",arr[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
