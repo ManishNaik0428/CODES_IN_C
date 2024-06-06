@@ -1,0 +1,44 @@
+#include<stdio.h>
+int reverse(int str[],int n);
+int main()
+{
+   int arr[100],n,i,size;
+   printf("Array size:");
+   scanf("%d",&size);
+   for(i=0;i<size;i++)
+   {
+       printf("arr[%d]:",i);
+       scanf("%d",&arr[i]);
+   }
+   printf("Original Array:\n");
+   for(i=0;i<size;i++)
+   {
+       printf("[%d]",arr[i]);
+   }
+    printf("\nEnter the number of elements to reverse: ");
+    scanf("%d", &n);
+    if(n>size)
+    {
+        printf("\nN size is greater then array size\n");
+        return 1;
+    }
+    reverse(arr,n);
+    printf("\nreversing after n array is :\n");
+    for(i=0;i<size;i++)
+    {
+        printf("[%d]",arr[i]);
+    }
+}
+int reverse(int str[],int n)
+{
+    int start=0,end=n-1;
+    while(start<end)
+    {
+        int temp=str[start];
+        str[start]=str[end];
+        str[end]=temp;
+        
+        start++;
+        end--;
+    }
+}
