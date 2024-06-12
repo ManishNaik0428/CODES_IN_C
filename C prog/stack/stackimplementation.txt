@@ -7,6 +7,8 @@ void push(int data);
 int pop();
 int print();
 int peek();
+int isFull();
+int isEmpty();
 int main()
 {
     int choice , data;
@@ -47,7 +49,7 @@ int main()
 
 void push(int data)
 {
-    if(top==MAX-1)
+    if(isFull())
     {
         printf("Stack Overflow\n");
     }
@@ -57,7 +59,7 @@ void push(int data)
  int pop()
  {
      int value;
-     if(top==-1)
+     if(isEmpty())
      {
          printf("Stack Underflow\n");
      }
@@ -75,10 +77,17 @@ void push(int data)
  }
  int peek()
  {
-     if(top==-1)
+     if(isEmpty())
      {
          printf("Stack Underflow\n");
          return -1;
      }
      return stack_arr[top];
  }
+ int isEmpty() {
+    return top == -1;
+}
+
+int isFull() {
+    return top == MAX - 1;
+}
