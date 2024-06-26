@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main()
+{
+    int arr[100],i,n,size;
+    printf("Enter the size of an array:");
+    scanf("%d",&size);
+    for(i=0;i<size;i++)
+    {
+        printf("Arr[%d]:",i);
+        scanf("%d",&arr[i]);
+    }
+    printf("\nOriginal Array:");
+    for(i=0;i<size;i++)
+    {
+        printf("[%d]",arr[i]);
+    }
+    printf("\nEnter the N number to be reversed:");
+    scanf("%d",&n);
+    if(n>size)
+    {
+        printf("N is greater than original size of an Array");
+        return 1;
+    }
+    printf("\nArray Reverse:");
+    
+    for(i=0;i<n/2;i++)
+    {
+        int temp=arr[i];
+        arr[i]=arr[n-1-i];
+        arr[n-1-i]=temp;
+    }
+    for(i=0;i<size;i++)
+    {
+        printf("[%d]",arr[i]);
+    }
+    return 0;
+    
+}
